@@ -7,6 +7,7 @@ const Task = require("../models/task-model");
 
 // POST => Create new project
 router.post("/projects", (req, res, next) => {
+  console.log(req.body);
   const { title, description } = req.body;
 
   Project.create({ title, description, tasks: [] })
@@ -91,7 +92,7 @@ router.delete("/projects/:id", (req, res, next) => {
       });
     })
     .catch((error) => {
-      res.json(error);
+      res.json({ error, errorMessage: `Something went wrong` });
     });
 });
 
