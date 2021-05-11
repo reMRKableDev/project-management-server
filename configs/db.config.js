@@ -4,6 +4,7 @@ mongoose
   .connect("mongodb://localhost/project-management-server", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true,
     useFindAndModify: false,
   })
   .then((x) => {

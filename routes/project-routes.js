@@ -7,9 +7,15 @@ const Task = require("../models/task-model");
 
 // POST => Create new project
 router.post("/projects", (req, res, next) => {
-  const { title, description } = req.body;
+  const { title, description, imageUrl } = req.body;
 
-  Project.create({ title, description, tasks: [], owner: req.user._id })
+  Project.create({
+    title,
+    description,
+    imageUrl,
+    tasks: [],
+    owner: req.user._id,
+  })
     .then((createdProject) => {
       res.status(200).json(createdProject);
     })
