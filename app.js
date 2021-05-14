@@ -10,6 +10,7 @@ const path = require("path");
 const cors = require("cors");
 const session = require("express-session");
 const passport = require("passport");
+const MongoStore = require("connect-mongo")(session);
 
 require("./configs/db.config");
 require("./configs/passport");
