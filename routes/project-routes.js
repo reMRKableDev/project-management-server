@@ -1,11 +1,11 @@
-const express = require("express");
+const { Router } = require("express");
 const mongoose = require("mongoose");
-const router = express.Router();
 
 const Project = require("../models/project-model");
 const Task = require("../models/task-model");
 
-// POST => Create new project
+const router = Router();
+
 router.post("/projects", (req, res, next) => {
   const { title, description, imageUrl } = req.body;
 
@@ -25,8 +25,7 @@ router.post("/projects", (req, res, next) => {
     });
 });
 
-// GET => Return all projects
-router.get("/projects", (req, res, next) => {
+router.get("/projects", (_req, res, next) => {
   Project.find()
     .populate("tasks")
     .then((allTheProjects) => {
@@ -38,7 +37,6 @@ router.get("/projects", (req, res, next) => {
     });
 });
 
-// GET route => to get a specific project/detailed view
 router.get("/projects/:id", (req, res, next) => {
   const { id } = req.params;
 
@@ -47,8 +45,7 @@ router.get("/projects/:id", (req, res, next) => {
     return;
   }
 
-  // Our projects have array of tasks' ids and
-  // we can use .populate() method to get the whole task objects
+
   Project.findById(id)
     .populate("tasks")
     .then((project) => {
@@ -81,7 +78,6 @@ router.put("/projects/:id", (req, res, next) => {
     });
 });
 
-// DELETE route => to delete a specific project
 router.delete("/projects/:id", (req, res, next) => {
   const { id } = req.params;
 

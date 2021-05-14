@@ -1,4 +1,5 @@
 const cors = require("cors");
+
 const { FRONTEND_ENDPOINT_DEVELOPMENT, FRONTEND_ENDPOINT_PRODUCTION } =
   process.env;
 

@@ -1,14 +1,14 @@
-const express = require("express");
-const authRoutes = express.Router();
-
+const { Router } = require("express");
 const passport = require("passport");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 
-const SALT_ROUNDS = 10;
-
-// require the user model !!!!
 const User = require("../models/user-model");
+
+const authRoutes = Router();
+
+const SALT_ROUNDS = 10;
+const PASSWORD_REGEX_FORMAT = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
 
 authRoutes.post("/signup", (req, res, next) => {
   const { username, password } = req.body;
@@ -18,9 +18,7 @@ authRoutes.post("/signup", (req, res, next) => {
     return;
   }
 
-  // make sure passwords are strong:
-  const regex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
-  if (!regex.test(password)) {
+  if (!PASSWORD_REGEX_FORMAT.test(password)) {
     res.status(500).json({
       message:
         "Password needs to have at least 6 chars and must contain at least one number, one lowercase and one uppercase letter.",
@@ -38,12 +36,7 @@ authRoutes.post("/signup", (req, res, next) => {
       });
     })
     .then((userFromDB) => {
-      console.log("Newly created user is: ", userFromDB);
-      // Send the user's information to the frontend
-      // We can use also: res.status(200).json(req.user);
-
       const { _id, username, createdAt, updatedAt } = userFromDB;
-
       res.status(200).json({ _id, username, createdAt, updatedAt });
     })
     .catch((error) => {
@@ -68,8 +61,6 @@ authRoutes.post("/login", (req, res, next) => {
     }
 
     if (!theUser) {
-      // "failureDetails" contains the error messages
-      // from our logic in "LocalStrategy" { message: '...' }.
       res.status(401).json(failureDetails);
       return;
     }
@@ -81,24 +72,24 @@ authRoutes.post("/login", (req, res, next) => {
         return;
       }
 
-      // We are now logged in (that's why we can also send req.user)
-      res.status(200).json(theUser);
+      const { _id, username, createdAt, updatedAt } = theUser;
+      res.status(200).json({ _id, username, createdAt, updatedAt });
     });
   })(req, res, next);
 });
 
-authRoutes.post("/logout", (req, res, next) => {
-  // req.logout() is defined by passport
+authRoutes.post("/logout", (req, res) => {
   req.logout();
   res.status(200).json({ message: "Log out success!" });
 });
 
-authRoutes.get("/loggedin", (req, res, next) => {
-  // req.isAuthenticated() is defined by passport
+authRoutes.get("/loggedin", (req, res) => {
   if (req.isAuthenticated()) {
-    res.status(200).json(req.user);
+    const { _id, username, createdAt, updatedAt } = req.user;
+    res.status(200).json({ _id, username, createdAt, updatedAt });
     return;
   }
+
   res.status(403).json({ message: "Unauthorized" });
 });
 
