@@ -5,7 +5,7 @@ const { MONGO_URI_LOCAL, MONGO_URI_ATLAS, NODE_ENV } = process.env;
 
 const connectDb = (mongoUri) =>
   mongoose
-    .connect("mongodb://localhost/project-management-server", {
+    .connect(mongoUri, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
