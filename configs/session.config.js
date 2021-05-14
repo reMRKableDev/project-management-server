@@ -9,9 +9,6 @@ const {
 } = process.env;
 
 module.exports = (incomingApp) => {
-  // SET TO TRUST PROXY WHEN APP IS DEPLOYED
-  incomingApp.set("trust proxy", 1);
-
   incomingApp.use(
     session({
       secret: SESS_SECRET,
@@ -19,11 +16,7 @@ module.exports = (incomingApp) => {
       resave: true,
       saveUninitialized: false,
       cookie: {
-        // sameSite checks our environment
-        // on development = lax --> cookies are only set when the domain in the URL of the browser matches the domain of the cookie
-        sameSite: NODE_ENV === "production" ? "none" : "lax",
-        secure: NODE_ENV === "production",
-        httpOnly: true,
+        maxAge: 60000 * 60 * 24,
       },
       store: MongoStore.create({
         mongoUrl: MONGO_URI_LOCAL || MONGO_URI_ATLAS,
