@@ -1,5 +1,6 @@
-require("dotenv").config();
+require("dotenv").config(); // ENSURES THAT WE CAN READ FROM THE .env FILE
 
+// DEPENDENCIES
 const cookieParser = require("cookie-parser");
 const express = require("express");
 const logger = require("morgan");
@@ -11,7 +12,7 @@ require("./configs/db.config");
 // CONNECT PASSPORT CONFIGS
 require("./configs/passport.config");
 
-// INSTANTIATE EXPRESS APP
+// INSTANTIATE EXPRESS app
 const app = express();
 
 // app MIDDLEWARE SETUP
@@ -20,14 +21,14 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-// SESSION CONFIGS
+// SET SESSION CONFIGS TO THE app
 require("./configs/session.config")(app);
 
-// PASSPORT CONFIGS
+// ENSURE app MAKES USE OF PASSPORT IN ORDER FOR THE PASSPORT CONFIGS TO WORK
 app.use(passport.initialize());
 app.use(passport.session());
 
-// ADD CORS SETTINGS HERE TO ALLOW CROSS-ORIGIN INTERACTION:
+// ADD CORS SETTINGS TO app HERE TO ALLOW CROSS-ORIGIN INTERACTION:
 require("./configs/cors.config")(app);
 
 // ROUTES MIDDLEWARE STARTS HERE:

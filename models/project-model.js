@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const { Schema, model } = mongoose;
 
 const projectSchema = new Schema({
   title: String,
@@ -9,6 +9,4 @@ const projectSchema = new Schema({
   owner: { type: Schema.Types.ObjectId, ref: "User" },
 });
 
-const Project = mongoose.model("Project", projectSchema);
-
-module.exports = Project;
+module.exports = model("Project", projectSchema);
