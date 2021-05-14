@@ -1,6 +1,12 @@
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
-const { SESS_SECRET, MONGO_URI_ATLAS, MONGO_URI_LOCAL, NODE_ENV } = process.env;
+const {
+  SESS_SECRET,
+  SESS_COOKIE_NAME,
+  MONGO_URI_ATLAS,
+  MONGO_URI_LOCAL,
+  NODE_ENV,
+} = process.env;
 
 module.exports = (incomingApp) => {
   // SET TO TRUST PROXY WHEN APP IS DEPLOYED
@@ -9,6 +15,7 @@ module.exports = (incomingApp) => {
   incomingApp.use(
     session({
       secret: SESS_SECRET,
+      name: SESS_COOKIE_NAME,
       resave: true,
       saveUninitialized: false,
       cookie: {
