@@ -36,8 +36,17 @@ authRoutes.post("/signup", (req, res, next) => {
       });
     })
     .then((userFromDB) => {
-      const { _id, username, createdAt, updatedAt } = userFromDB;
-      res.status(200).json({ _id, username, createdAt, updatedAt });
+      // save user in session
+      req.login(userFromDB, (err) => {
+        if (err) {
+          res.status(500).json({ message: "Session save went bad." });
+          return;
+        }
+
+        const { _id, username, createdAt, updatedAt } = req.user;
+
+        res.status(200).json({ _id, username, createdAt, updatedAt });
+      });
     })
     .catch((error) => {
       if (error.code === 11000) {

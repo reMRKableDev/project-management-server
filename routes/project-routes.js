@@ -45,7 +45,6 @@ router.get("/projects/:id", (req, res, next) => {
     return;
   }
 
-
   Project.findById(id)
     .populate("tasks")
     .then((project) => {

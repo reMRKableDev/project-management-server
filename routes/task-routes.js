@@ -24,7 +24,6 @@ router.post("/tasks", (req, res, next) => {
     project: projectID,
   })
     .then((response) => {
-      console.log("task", response);
       return Project.findByIdAndUpdate(projectID, {
         $push: { tasks: response._id },
       });
