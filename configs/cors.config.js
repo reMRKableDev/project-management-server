@@ -1,11 +1,11 @@
 const cors = require("cors");
-const { CORS_ORIGIN } = process.env;
+const { FRONTEND_ENDPOINT } = process.env;
 
 module.exports = (incomingApp) => {
   incomingApp.use(
     cors({
       credentials: true,
-      origin: CORS_ORIGIN,
+      origin: FRONTEND_ENDPOINT,
     })
   );
 };
