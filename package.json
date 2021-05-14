@@ -19,7 +19,6 @@
     "dotenv": "^9.0.2",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
-    "hbs": "^4.1.2",
     "mongoose": "^5.12.9",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
