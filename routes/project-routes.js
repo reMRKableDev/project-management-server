@@ -8,7 +8,7 @@ const router = Router();
 
 router.post("/projects", (req, res, next) => {
   const { title, description, imageUrl } = req.body;
-  console.log("LOGGED IN USER", req.user);
+  console.log("LOGGED IN USER PROJECTS", req.user);
 
   Project.create({
     title,
@@ -30,6 +30,7 @@ router.get("/projects", (_req, res, next) => {
   Project.find()
     .populate("tasks")
     .then((allTheProjects) => {
+      console.log("LOGGED IN USER IN PROJECTS", req.user);
       res.status(200).json(allTheProjects);
     })
     .catch((err) => {

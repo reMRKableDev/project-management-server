@@ -84,6 +84,9 @@ authRoutes.post("/login", (req, res, next) => {
       }
 
       const { _id, username, createdAt, updatedAt } = theUser;
+
+      console.log("LOGGED IN USER", req.user);
+
       res.status(200).json({ _id, username, createdAt, updatedAt });
     });
   })(req, res, next);
