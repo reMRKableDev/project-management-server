@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 const { MONGO_URI_LOCAL, MONGO_URI_ATLAS, NODE_ENV } = process.env;
 
 // CREATE A FUNCTION FOR MONGO CONNECTION --> A better way to switch between production and development environments
-
 const connectDb = (mongoUri) =>
   mongoose
     .connect(mongoUri, {
