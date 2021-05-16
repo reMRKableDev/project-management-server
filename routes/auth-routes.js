@@ -45,6 +45,8 @@ authRoutes.post("/signup", (req, res, next) => {
 
         const { _id, username, createdAt, updatedAt } = req.user;
 
+        console.log("LOGGED IN USER", req.user);
+
         res.status(200).json({ _id, username, createdAt, updatedAt });
       });
     })
