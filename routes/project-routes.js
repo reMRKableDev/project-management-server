@@ -26,7 +26,7 @@ router.post("/projects", (req, res, next) => {
     });
 });
 
-router.get("/projects", (_req, res, next) => {
+router.get("/projects", (req, res, next) => {
   Project.find()
     .populate("tasks")
     .then((allTheProjects) => {
